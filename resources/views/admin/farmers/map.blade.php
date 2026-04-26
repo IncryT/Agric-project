@@ -1,0 +1,121 @@
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Farmer Location Map') }}
+            </h2>
+
+            <a href="{{ route('admin.farmers.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 transition shadow-sm">
+                Back to Directory
+            </a>
+        </div>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white shadow-sm ring-1 ring-gray-200 sm:rounded-lg">
+                <div class="p-6">
+                    <!-- Search Controls -->
+                    <div class="mb-4 p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center space-x-3">
+                            <label for="radiusInput" class="font-medium text-gray-700">Search Radius (km):</label>
+                            <input type="number" id="radiusInput" value="50" step="10" min="10" class="w-20 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <button id="searchButton" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                                Search
+                            </button>
+                            <span id="radiusDisplay" class="ml-3 font-mono text-gray-600">50 km</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Map Container -->
+                    <div id="map" style="height: 500px; width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @push('scripts')
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the map centered on Zimbabwe (approximate center)
+            var centerLat = -19.0154;
+            var centerLng = 29.1549;
+            var centerPoint = L.latLng(centerLat, centerLng);
+            
+            var map = L.map('map').setView(centerPoint, 6);
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Add a permanent marker for our central location
+            L.marker(centerPoint).addTo(map).bindPopup("<b>Center Point</b>").openPopup();
+
+            // Create a marker cluster group
+            var markersLayer = L.layerGroup().addTo(map);
+
+            // Get farmers data from PHP
+            var farmers = @json($farmers);
+
+            // Variables to hold our dynamic map layers so we can remove them on new searches
+            var radiusCircle = null;
+
+            // Function to filter and update the map
+            function updateMap() {
+                // Get radius from the input field (convert km to meters)
+                var radiusInKm = document.getElementById('radiusInput').value;
+                var radiusInMeters = radiusInKm * 1000;
+                
+                // Update display
+                document.getElementById('radiusDisplay').textContent = radiusInKm + ' km';
+
+                // Clear previous circle and markers
+                if (radiusCircle) {
+                    map.removeLayer(radiusCircle);
+                }
+                markersLayer.clearLayers();
+
+                // Draw the new visual circle on the map
+                radiusCircle = L.circle(centerPoint, {
+                    color: '#3388ff',
+                    fillColor: '#3388ff',
+                    fillOpacity: 0.2,
+                    radius: radiusInMeters
+                }).addTo(map);
+
+                // Add farmer markers that are within the radius
+                farmers.forEach(function(farmer) {
+                    var itemPoint = L.latLng(farmer.latitude, farmer.longitude);
+                    
+                    // Calculate distance (returns meters)
+                    var distance = centerPoint.distanceTo(itemPoint);
+
+                    // If the distance is less than or equal to our radius, add it to the map
+                    if (distance <= radiusInMeters) {
+                        var marker = L.marker(itemPoint);
+                        marker.bindPopup('<b>' + farmer.name + '</b><br>District: ' + farmer.district + '<br>Distance: ' + Math.round(distance/1000) + ' km');
+                        markersLayer.addLayer(marker);
+                    }
+                });
+
+                // Adjust the map zoom to fit the new circle
+                map.fitBounds(radiusCircle.getBounds());
+            }
+
+            // Event listeners
+            document.getElementById('searchButton').addEventListener('click', updateMap);
+            document.getElementById('radiusInput').addEventListener('change', updateMap);
+
+            // Run the function once on load to populate the initial 50km radius
+            updateMap();
+        });
+    </script>
+    @endpush
+</x-app-layout>

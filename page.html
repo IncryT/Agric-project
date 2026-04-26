@@ -1,0 +1,403 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>APAS | Intelligence for Modern Agribusiness</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+        <link rel="preload" as="style" href="http://127.0.0.1:8000/build/assets/app-cJB6WBPI.css" /><link rel="modulepreload" as="script" href="http://127.0.0.1:8000/build/assets/app-BIJoUbyE.js" /><link rel="stylesheet" href="http://127.0.0.1:8000/build/assets/app-cJB6WBPI.css" /><script type="module" src="http://127.0.0.1:8000/build/assets/app-BIJoUbyE.js"></script>        <style>
+            body { font-family: 'Plus Jakarta Sans', sans-serif; }
+            .glass { background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+            .aurora { filter: blur(100px); opacity: 0.4; }
+            .marquee {
+                animation: marquee 20s linear infinite;
+            }
+            @keyframes marquee {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }
+        </style>
+    </head>
+    <body class="min-h-screen bg-[#020617] text-slate-100 antialiased selection:bg-emerald-500/30">
+        <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+            <div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-emerald-600/20 aurora rounded-full"></div>
+            <div class="absolute top-[22%] -right-[8%] w-[38%] h-[38%] bg-emerald-500/15 aurora rounded-full"></div>
+            <div class="absolute bottom-[5%] left-[15%] w-[25%] h-[25%] bg-emerald-400/15 aurora rounded-full"></div>
+            <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+        </div>
+
+        <div class="sticky top-0 z-50 glass border-b border-white/10 backdrop-blur-2xl">
+            <div class="mx-auto max-w-7xl px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+                <a href="http://127.0.0.1:8000" class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-3xl bg-gradient-to-br from-emerald-400 to-cyan-400 shadow-2xl shadow-emerald-500/20 flex items-center justify-center text-slate-950 font-bold">A</div>
+                    <div>
+                        <p class="text-xl font-semibold text-white">APAS</p>
+                        <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Agricultural Price Advisor</p>
+                    </div>
+                </a>
+                <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+                    <a href="#features" class="hover:text-emerald-400 transition-colors">Features</a>
+                    <a href="#ticker" class="hover:text-emerald-400 transition-colors">Market Pulse</a>
+                    <a href="#insights" class="hover:text-emerald-400 transition-colors">Advisor</a>
+                </nav>
+                <div class="flex items-center gap-3">
+                                                                        <a href="http://127.0.0.1:8000/login" class="text-sm font-semibold text-slate-200 hover:text-white transition">Sign In</a>
+                                                            <a href="http://127.0.0.1:8000/register" class="rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 px-5 py-2.5 text-sm font-bold text-slate-950 shadow-2xl shadow-cyan-500/20 hover:from-emerald-300 hover:to-cyan-300 transition">Get Started</a>
+                                                                                        </div>
+            </div>
+        </div>
+
+        <main class="mx-auto max-w-7xl px-6 py-12 lg:py-16">
+            <div class="grid gap-16 lg:grid-cols-[1.05fr_0.95fr] items-center">
+                <div class="space-y-8">
+                    <div class="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-emerald-300">Live Insights </div>
+                    <h1 class="text-5xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl leading-tight">
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-300 to-emerald-200">Maximize Harvest Profits.</span>
+                    </h1>
+                    <p class="max-w-2xl text-lg leading-8 text-slate-300">The agricultural price advisor for modern farms and agribusiness.  </p>
+                    <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+                        <a href="http://127.0.0.1:8000/register" class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-emerald-400 to-emerald-600 px-8 py-4 text-lg font-semibold text-slate-950 shadow-2xl shadow-emerald-500/30 hover:scale-[1.01] transition">Register</a>
+                        <a href="http://127.0.0.1:8000/login" class="inline-flex items-center justify-center rounded-full glass border border-emerald-400/20 px-8 py-4 text-lg font-semibold text-emerald-200 hover:bg-emerald-400/15 transition">Login</a>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-emerald-500/25 via-emerald-400/15 to-slate-900/0 blur-3xl"></div>
+                    <div class="glass relative rounded-[2.5rem] p-6 shadow-2xl shadow-slate-950/30 border border-white/10">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="space-y-1">
+                                <p class="text-xs uppercase tracking-[0.3em] text-slate-400"></p>
+                                <p class="text-sm text-slate-300"></p>
+                            </div>
+                            <div class="inline-flex items-center gap-2 rounded-full bg-slate-950/60 px-3 py-2 text-xs text-slate-200">Live</div>
+                        </div>
+                        <div class="grid gap-4 sm:grid-cols-2 mb-6">
+                            <div class="rounded-3xl bg-white/5 p-5 border border-white/5">
+                                <p class="text-[10px] uppercase tracking-[0.3em] text-slate-400">Next scrape</p>
+                                <p class="mt-3 text-2xl font-semibold text-white">06:00 AM</p>
+                            </div>
+                            <div class="rounded-3xl bg-white/5 p-5 border border-white/5">
+                                <p class="text-[10px] uppercase tracking-[0.3em] text-slate-400">Weather</p>
+                                <p class="mt-3 text-2xl font-semibold text-white">Harare 24∩┐╜C</p>
+                            </div>
+                        </div>
+                        <div class="rounded-[2rem] border border-white/5 bg-slate-950/80 p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm uppercase tracking-[0.3em] text-slate-400">Price forecast</p>
+                                    <p class="mt-3 text-3xl font-bold text-white">18.4% increase</p>
+                                </div>
+                                <div class="rounded-3xl bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-300">High confidence</div>
+                            </div>
+                            <div class="mt-6 h-48 rounded-[1.75rem] bg-gradient-to-t from-emerald-400/20 via-transparent to-transparent relative overflow-hidden">
+                                <div class="absolute bottom-6 left-6 right-6 flex items-end gap-2 h-28">
+                                    <div class="h-1/3 w-full rounded-t-full bg-emerald-400/15"></div>
+                                    <div class="h-1/2 w-full rounded-t-full bg-emerald-400/30"></div>
+                                    <div class="h-5/6 w-full rounded-t-full bg-emerald-400/40"></div>
+                                    <div class="h-2/3 w-full rounded-t-full bg-emerald-400/20"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section id="ticker" class="mb-16">
+                <div class="glass rounded-[2rem] border border-white/10 p-5 shadow-2xl shadow-slate-950/20">
+                    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
+                        <div>
+                            <p class="text-sm uppercase tracking-[0.3em] text-emerald-300 font-semibold">Live Price Ticker</p>
+                            <h2 class="text-3xl font-semibold text-white">Real-time crop market updates</h2>
+                        </div>
+                        <div class="inline-flex items-center rounded-full bg-slate-900/80 px-4 py-2 text-sm text-slate-300"></div>
+                    </div>
+                    <div class="overflow-hidden rounded-[1.75rem] bg-slate-950/80 border border-white/5 p-3">
+                        <div class="flex min-w-full gap-8 marquee">
+                                                            <div class="flex min-w-[18rem] items-center justify-between gap-4 rounded-3xl border border-white/5 bg-white/5 px-5 py-4">
+                                    <div>
+                                        <p class="text-sm uppercase tracking-[0.2em] text-slate-300">Wheat</p>
+                                        <p class="mt-1 text-2xl font-bold text-white">$240.50</p>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-sm font-semibold text-emerald-400">
+                                        <span>+1.2%</span>
+                                        <i data-lucide="trending-up" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                                                            <div class="flex min-w-[18rem] items-center justify-between gap-4 rounded-3xl border border-white/5 bg-white/5 px-5 py-4">
+                                    <div>
+                                        <p class="text-sm uppercase tracking-[0.2em] text-slate-300">Corn</p>
+                                        <p class="mt-1 text-2xl font-bold text-white">$185.20</p>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-sm font-semibold text-rose-400">
+                                        <span>-0.5%</span>
+                                        <i data-lucide="trending-down" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                                                            <div class="flex min-w-[18rem] items-center justify-between gap-4 rounded-3xl border border-white/5 bg-white/5 px-5 py-4">
+                                    <div>
+                                        <p class="text-sm uppercase tracking-[0.2em] text-slate-300">Soybeans</p>
+                                        <p class="mt-1 text-2xl font-bold text-white">$410.00</p>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-sm font-semibold text-emerald-400">
+                                        <span>+2.8%</span>
+                                        <i data-lucide="trending-up" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                                                            <div class="flex min-w-[18rem] items-center justify-between gap-4 rounded-3xl border border-white/5 bg-white/5 px-5 py-4">
+                                    <div>
+                                        <p class="text-sm uppercase tracking-[0.2em] text-slate-300">Rice</p>
+                                        <p class="mt-1 text-2xl font-bold text-white">$320.15</p>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-sm font-semibold text-emerald-400">
+                                        <span>+0.3%</span>
+                                        <i data-lucide="trending-up" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                                                            <div class="flex min-w-[18rem] items-center justify-between gap-4 rounded-3xl border border-white/5 bg-white/5 px-5 py-4">
+                                    <div>
+                                        <p class="text-sm uppercase tracking-[0.2em] text-slate-300">Barley</p>
+                                        <p class="mt-1 text-2xl font-bold text-white">$210.80</p>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-sm font-semibold text-rose-400">
+                                        <span>-1.1%</span>
+                                        <i data-lucide="trending-down" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                                                                                        <div class="flex min-w-[18rem] items-center justify-between gap-4 rounded-3xl border border-white/5 bg-white/5 px-5 py-4">
+                                    <div>
+                                        <p class="text-sm uppercase tracking-[0.2em] text-slate-300">Wheat</p>
+                                        <p class="mt-1 text-2xl font-bold text-white">$240.50</p>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-sm font-semibold text-emerald-400">
+                                        <span>+1.2%</span>
+                                        <i data-lucide="trending-up" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                                                            <div class="flex min-w-[18rem] items-center justify-between gap-4 rounded-3xl border border-white/5 bg-white/5 px-5 py-4">
+                                    <div>
+                                        <p class="text-sm uppercase tracking-[0.2em] text-slate-300">Corn</p>
+                                        <p class="mt-1 text-2xl font-bold text-white">$185.20</p>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-sm font-semibold text-rose-400">
+                                        <span>-0.5%</span>
+                                        <i data-lucide="trending-down" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                                                            <div class="flex min-w-[18rem] items-center justify-between gap-4 rounded-3xl border border-white/5 bg-white/5 px-5 py-4">
+                                    <div>
+                                        <p class="text-sm uppercase tracking-[0.2em] text-slate-300">Soybeans</p>
+                                        <p class="mt-1 text-2xl font-bold text-white">$410.00</p>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-sm font-semibold text-emerald-400">
+                                        <span>+2.8%</span>
+                                        <i data-lucide="trending-up" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                                                            <div class="flex min-w-[18rem] items-center justify-between gap-4 rounded-3xl border border-white/5 bg-white/5 px-5 py-4">
+                                    <div>
+                                        <p class="text-sm uppercase tracking-[0.2em] text-slate-300">Rice</p>
+                                        <p class="mt-1 text-2xl font-bold text-white">$320.15</p>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-sm font-semibold text-emerald-400">
+                                        <span>+0.3%</span>
+                                        <i data-lucide="trending-up" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                                                            <div class="flex min-w-[18rem] items-center justify-between gap-4 rounded-3xl border border-white/5 bg-white/5 px-5 py-4">
+                                    <div>
+                                        <p class="text-sm uppercase tracking-[0.2em] text-slate-300">Barley</p>
+                                        <p class="mt-1 text-2xl font-bold text-white">$210.80</p>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-sm font-semibold text-rose-400">
+                                        <span>-1.1%</span>
+                                        <i data-lucide="trending-down" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                                                    </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="features" class="grid gap-6 md:grid-cols-3 mb-24">
+                <div class="glass rounded-[2.5rem] border border-white/10 p-8 shadow-2xl shadow-slate-950/20">
+                    <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-emerald-500/10 text-emerald-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17a4 4 0 100-8 4 4 0 000 8zM21 21l-4.35-4.35"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Localized Market Maps</h3>
+                    <p class="text-slate-400">Track prices across districts and compare the best sale routes at a glance.</p>
+                </div>
+                <div class="glass rounded-[2.5rem] border border-white/10 p-8 shadow-2xl shadow-slate-950/20">
+                    <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-sky-500/10 text-sky-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Automated Reports</h3>
+                    <p class="text-slate-400">Generate clear export-ready summaries for procurement and farm management.</p>
+                </div>
+                <div class="glass rounded-[2.5rem] border border-white/10 p-8 shadow-2xl shadow-slate-950/20">
+                    <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-purple-500/10 text-purple-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Smart Alerts</h3>
+                    <p class="text-slate-400">Receive notifications for price thresholds, demand spikes, and market warnings.</p>
+                </div>
+            </section>
+        </main>
+
+        <footer class="border-t border-white/10 py-10">
+            <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 flex flex-col gap-6 md:flex-row md:items-center md:justify-between text-sm text-slate-400">
+                <div class="flex items-center gap-3">
+                    <div class="h-11 w-11 rounded-3xl bg-gradient-to-br from-emerald-400 to-cyan-400 flex items-center justify-center text-slate-950 font-bold">A</div>
+                    <div>
+                        <p class="font-semibold text-white">Agri Price Advisor System</p>
+                        <p>Modern pricing intelligence for agriculture.</p>
+                    </div>
+                </div>
+                <p>&copy; 2026 Agri Price Advisor System. All rights reserved.</p>
+                <div class="flex items-center gap-4 text-slate-400">
+                    <a href="#" class="hover:text-white">Terms</a>
+                    <a href="#" class="hover:text-white">Privacy</a>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Chatbot Toggle Button -->
+        <button id="chat-toggle" type="button" onclick="(function(){ const cw = document.getElementById('chat-window'); if (!cw) return; if (cw.classList.contains('scale-0')) { cw.classList.remove('scale-0'); cw.classList.add('scale-100'); } else { cw.classList.remove('scale-100'); cw.classList.add('scale-0'); } })()" class="fixed bottom-6 right-6 bg-green-600 text-white p-4 rounded-full shadow-2xl hover:bg-green-700 transition-all z-50 cursor-pointer">
+            <i data-lucide="message-circle" id="chat-icon"></i>
+        </button>
+
+        <!-- Chat Window -->
+        <div id="chat-window" class="fixed bottom-24 right-6 w-96 max-w-[calc(100vw-3rem)] h-[500px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all transform scale-0 origin-bottom-right z-50 border border-gray-100">
+            <!-- Header -->
+            <div class="bg-green-600 p-4 text-white flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                        <i data-lucide="bot" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold text-sm">AgriPrice Advisor</p>
+                        <p class="text-[10px] text-green-100 flex items-center gap-1">
+                            <span class="w-2 h-2 bg-green-300 rounded-full animate-pulse"></span> Online
+                        </p>
+                    </div>
+                </div>
+                <button id="close-chat" class="hover:bg-white/10 p-1 rounded"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+
+            <!-- Messages Area -->
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+                <div class="flex gap-2">
+                    <div class="bg-white border border-gray-200 p-3 rounded-2xl rounded-tl-none text-sm shadow-sm max-w-[80%]">
+                        Hello! ≡ƒî╛ I'm your market advisor. Ask me about current crop prices or market trends!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typing Indicator (Hidden by default) -->
+            <div id="typing" class="hidden px-4 py-2 text-xs text-gray-500 italic">Advisor is thinking...</div>
+
+            <!-- Input Area -->
+            <form id="chat-form" class="p-4 bg-white border-t border-gray-100 flex gap-2">
+                <input type="text" id="user-input" placeholder="Ask about Wheat prices..." class="flex-1 bg-gray-100 border-none rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-green-500 outline-none">
+                <button type="submit" class="bg-green-600 text-white p-2 rounded-lg hover:bg-green-700">
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                </button>
+            </form>
+        </div>
+
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <script>lucide.createIcons();</script>
+        <script>
+            const chatToggle = document.getElementById('chat-toggle');
+            const chatWindow = document.getElementById('chat-window');
+            const closeChat = document.getElementById('close-chat');
+            const chatForm = document.getElementById('chat-form');
+            const userInput = document.getElementById('user-input');
+            const chatMessages = document.getElementById('chat-messages');
+            const typingIndicator = document.getElementById('typing');
+
+            function openChat() {
+                chatWindow.classList.remove('scale-0');
+                chatWindow.classList.add('scale-100');
+            }
+
+            function closeChatWindow() {
+                chatWindow.classList.remove('scale-100');
+                chatWindow.classList.add('scale-0');
+            }
+
+            function toggleChat() {
+                if (chatWindow.classList.contains('scale-0')) {
+                    openChat();
+                } else {
+                    closeChatWindow();
+                }
+            }
+
+            if (chatToggle) {
+                chatToggle.addEventListener('click', toggleChat);
+                chatToggle.setAttribute('onclick', 'toggleChat()');
+            }
+
+            if (closeChat) {
+                closeChat.addEventListener('click', closeChatWindow);
+            }
+
+            if (chatForm) {
+                chatForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const message = userInput.value.trim();
+                    if (!message) return;
+
+                    appendMessage(message, 'user');
+                    userInput.value = '';
+
+                    typingIndicator.classList.remove('hidden');
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                    try {
+                        const response = await fetch('chat.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: `message=${encodeURIComponent(message)}`
+                        });
+                        const data = await response.json();
+
+                        typingIndicator.classList.add('hidden');
+                        appendMessage(data.reply, 'bot');
+                    } catch (error) {
+                        typingIndicator.classList.add('hidden');
+                        appendMessage("Sorry, I'm having trouble connecting to the market database.", 'bot');
+                    }
+                });
+            }
+            function escapeHtml(text) {
+                return text
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
+            }
+
+            function renderMarkdown(text) {
+                return text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            }
+
+            function appendMessage(text, sender) {
+                const wrapper = document.createElement('div');
+                wrapper.className = sender === 'user' ? 'flex justify-end' : 'flex gap-2';
+
+                const safeText = escapeHtml(text);
+                const content = sender === 'user'
+                    ? `<div class="bg-green-600 text-white p-3 rounded-2xl rounded-tr-none text-sm shadow-md max-w-[80%]">${safeText}</div>`
+                    : `<div class="bg-white border border-gray-200 p-3 rounded-2xl rounded-tl-none text-sm shadow-sm max-w-[80%]">${renderMarkdown(safeText)}</div>`;
+
+                wrapper.innerHTML = content;
+                chatMessages.appendChild(wrapper);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        </script>
+    </body>
+</html>
