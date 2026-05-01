@@ -12,7 +12,7 @@ use Illuminate\View\View;
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view.
+     * Display the farmer login view.
      */
     public function create(): View
     {
@@ -20,7 +20,77 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
+     * Display the admin login view.
+     */
+    public function createAdmin(): View
+    {
+        return view('auth.admin-login');
+    }
+
+    /**
      * Handle an incoming authentication request.
+     * Determines redirect based on user type selection and actual role.
+     */
+    public function processLogin(LoginRequest $request): RedirectResponse
+    {
+        $request->authenticate();
+
+        $request->session()->regenerate();
+
+        // Get the selected user type from the form
+        $userType = $request->input('user_type', 'farmer');
+        $user = $request->user();
+
+        // Redirect based on user type selection and actual role
+        if ($userType === 'admin' && $user->role === 'admin') {
+            return redirect()->intended(route('admin.dashboard'));
+        } elseif ($userType === 'farmer' && $user->role === 'farmer') {
+            return redirect()->intended(route('farmer.dashboard'));
+        } else {
+            // If there's a mismatch, log out and show error
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            if ($userType === 'admin' && $user->role !== 'admin') {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'user_type' => __('This account does not have administrator privileges.'),
+                ]);
+            } elseif ($userType === 'farmer' && $user->role !== 'farmer') {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'user_type' => __('This account is not registered as a farmer.'),
+                ]);
+            } else {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'user_type' => __('Invalid account type selected.'),
+                ]);
+            }
+        }
+    }
+
+    /**
+     * Handle an incoming authentication request for admins (legacy).
+     * Verifies the user has admin role after authentication.
+     */
+    public function storeAdmin(LoginRequest $request): RedirectResponse
+    {
+        $request->authenticate();
+
+        // Ensure the authenticated user has admin role
+        if ($request->user()->role !== 'admin') {
+            Auth::logout();
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'email' => __('This account does not have administrator privileges.'),
+            ]);
+        }
+
+        $request->session()->regenerate();
+
+        return redirect()->intended(route('admin.dashboard'));
+    }
+
+    /**
+     * Handle an incoming authentication request for farmers (legacy).
      */
     public function store(LoginRequest $request): RedirectResponse
     {
@@ -28,12 +98,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // Check the user's role and redirect them to their specific dashboard
-        if ($request->user()->role === 'admin') {
-            return redirect()->intended(route('admin.dashboard'));
-        }
-
-        // Default redirect for farmers
         return redirect()->intended(route('farmer.dashboard'));
     }
 

@@ -16,11 +16,22 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                 
+                <!-- Total Farmers Card -->
+                <div class="bg-emerald-600 p-6 rounded-lg shadow-md text-white border-t-4 border-emerald-400">
+                    <div class="text-sm font-bold text-emerald-100 uppercase">Total Farmers</div>
+                    <div class="mt-2 text-4xl font-bold">{{ $totalFarmers }}</div>
+                    <div class="text-xs text-emerald-200 mt-2">
+                        <a href="{{ route('admin.farmers.index') }}" class="hover:underline">View Directory →</a>
+                    </div>
+                </div>
+
+                <!-- Tracked Products Card -->
                 <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
                     <div class="text-sm font-medium text-gray-500 uppercase">Tracked Products</div>
                     <div class="mt-2 text-3xl font-bold text-gray-900">{{ $totalProducts }}</div>
                 </div>
 
+                <!-- Latest Scrape Card -->
                 <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
                     <div class="text-sm font-medium text-gray-500 uppercase">Latest Scrape</div>
                     <div class="mt-2 text-xl font-bold text-green-600">{{ $lastScrapeCount }} Items</div>
@@ -33,6 +44,7 @@
                     </div>
                 </div>
 
+                <!-- Next Auto-Scrape Card -->
                 <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
                     <div class="text-sm font-medium text-gray-500 uppercase">Next Auto-Scrape</div>
                     <form action="{{ route('admin.schedule.update') }}" method="POST" class="mt-2 flex items-center gap-2">
@@ -42,6 +54,7 @@
                     </form>
                 </div>
 
+                <!-- SMS Alert Schedule Card -->
                 <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
                     <div class="text-sm font-medium text-gray-500 uppercase">SMS Alert Schedule</div>
                     <form action="{{ route('admin.alert-schedule.update') }}" method="POST" class="mt-2 flex items-center gap-2">
@@ -50,20 +63,6 @@
                         <button type="submit" class="bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700">Set</button>
                     </form>
                 </div>
-            </div>
-
-            <!-- Farmer Location Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
-                <div class="bg-emerald-600 p-6 rounded-lg shadow-md text-white border-t-4 border-emerald-400">
-                    <div class="text-sm font-bold text-emerald-100 uppercase">Total Farmers</div>
-                    <div class="mt-2 text-4xl font-bold">{{ $totalFarmers }}</div>
-                    <div class="text-xs text-emerald-200 mt-2">
-                        <a href="{{ route('admin.farmers.index') }}" class="hover:underline">View Directory →</a>
-                    </div>
-                </div>
-
-               
-                
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">

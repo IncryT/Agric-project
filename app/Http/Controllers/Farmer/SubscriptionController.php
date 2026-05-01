@@ -29,11 +29,22 @@ class SubscriptionController extends Controller
      */
     public function store(Request $request)
     {
+        // Convert empty numeric fields to null for validation
+        $request->merge([
+            'land_size' => $request->land_size ?: null,
+            'expected_yield_tonnes' => $request->expected_yield_tonnes ?: null,
+        ]);
+
         $validated = $request->validate([
             'product_id' => 'required|exists:products,id',
             'cop' => 'required|numeric|min:0',
             'profit_margin' => 'required|numeric|min:0',
             'frequency' => 'required|in:daily_summary',
+            'crop_variety' => ['nullable', 'string', 'max:255'],
+            'land_size' => ['nullable', 'numeric', 'min:0'],
+            'expected_yield_tonnes' => ['nullable', 'numeric', 'min:0'],
+            'planting_season' => ['nullable', 'string', 'max:100'],
+            'notes' => ['nullable', 'string', 'max:1000'],
         ]);
 
         // Create or update the subscription for this specific user and product
@@ -46,6 +57,11 @@ class SubscriptionController extends Controller
                 'cop' => $validated['cop'],
                 'profit_margin' => $validated['profit_margin'],
                 'frequency' => $validated['frequency'],
+                'crop_variety' => $validated['crop_variety'] ?? null,
+                'land_size' => $validated['land_size'] ?? null,
+                'expected_yield_tonnes' => $validated['expected_yield_tonnes'] ?? null,
+                'planting_season' => $validated['planting_season'] ?? null,
+                'notes' => $validated['notes'] ?? null,
             ]
         );
 

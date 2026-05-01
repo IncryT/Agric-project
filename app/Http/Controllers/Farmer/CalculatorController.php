@@ -5,20 +5,22 @@ namespace App\Http\Controllers\Farmer;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Services\PricingCalculatorService;
-use GuzzleHttp\Client;
+use App\Services\RoutingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class CalculatorController extends Controller
 {
     protected PricingCalculatorService $calculatorService;
+    protected RoutingService $routingService;
     // Mbare Market, Harare Coordinates
     protected array $mbareCoordinates = ['lat' => -17.8596, 'lng' => 31.0384];
 
-    // Inject the service class to handle the financial logic
-    public function __construct(PricingCalculatorService $calculatorService)
+    // Inject the service classes
+    public function __construct(PricingCalculatorService $calculatorService, RoutingService $routingService)
     {
         $this->calculatorService = $calculatorService;
+        $this->routingService = $routingService;
     }
 
     /**
@@ -50,29 +52,16 @@ class CalculatorController extends Controller
         $transportRate = $validated['transport_rate'] ?? 0;
         $supportServices = [];
 
-        $client = new Client(['timeout' => 10.0]);
-
-        // 1. Calculate road distance using OSRM
+        // 1. Calculate road distance using OSRM via RoutingService
         if ($user && $user->latitude && $user->longitude) {
-            try {
-                $osrmUrl = sprintf(
-                    'http://router.project-osrm.org/route/v1/driving/%f,%f;%f,%f?overview=false',
-                    $user->longitude, $user->latitude,
-                    $this->mbareCoordinates['lng'], $this->mbareCoordinates['lat']
-                );
-
-                $osrmResponse = $client->get($osrmUrl);
-                $osrmData = json_decode($osrmResponse->getBody(), true);
-                if (isset($osrmData['routes'][0]['distance'])) {
-                    $distanceInKm = $osrmData['routes'][0]['distance'] / 1000;
-                }
-            } catch (\Exception $e) {
-                Log::error('OSRM Distance Calculation Failed: ' . $e->getMessage());
-            }
+            $distanceInKm = $this->routingService->calculateDistanceToMbare(
+                $user->latitude, 
+                $user->longitude
+            );
         }
 
         // 2. Discover Agro-Dealers near Market using Overpass API (Independent of farm location)
-        $supportServices = $this->fetchNearbyServices($client);
+        $supportServices = $this->fetchNearbyServices();
         
         // 3. Retrieve the market price
         $mrpData = $this->calculatorService->calculateMRP($product->id);
@@ -108,8 +97,10 @@ class CalculatorController extends Controller
      * Fetch Nearby Infrastructure (POIs) using OSM Overpass API.
      * Only searches for Agro-Dealers (shops).
      */
-    private function fetchNearbyServices(Client $client): array
+    private function fetchNearbyServices(): array
     {
+        $client = new \GuzzleHttp\Client(['timeout' => 10.0]);
+        
         // Query for agrarian shops within 10km of Mbare
         $query = sprintf('
             [out:json][timeout:25];

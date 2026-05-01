@@ -40,10 +40,11 @@ class SmsService
      */
     public function sendSms(string $to, string $message): bool
     {
+        $originalTo = $to;
         $to = $this->normalizePhoneNumber($to);
 
         if (! $this->isValidPhoneNumber($to)) {
-            Log::error("Twilio SMS Failed: invalid recipient phone number '{$to}'.");
+            Log::warning("SMS skipped: Invalid recipient phone number '{$originalTo}' (normalized to '{$to}')");
             return false;
         }
 
@@ -53,12 +54,20 @@ class SmsService
                 'body' => $message,
             ]);
 
+            Log::info("SMS sent successfully to {$to}");
             return true;
         } catch (\Throwable $e) {
-            Log::error("Twilio SMS failed to send to {$to}. Error: " . $e->getMessage(), [
+            $errorMsg = $e->getMessage();
+            Log::error("Twilio SMS failed to send to {$originalTo} (normalized: {$to}). Error: {$errorMsg}", [
                 'from' => $this->from,
-                'message' => mb_substr($message, 0, 160),
+                'message_preview' => mb_substr($message, 0, 160),
+                'twilio_error' => $errorMsg,
             ]);
+
+            // Check if account is in trial mode
+            if (str_contains($errorMsg, 'trial') || str_contains($errorMsg, 'verify') || str_contains($errorMsg, 'Invalid')) {
+                \Log::warning('Tip: Your Twilio account may be in trial mode. Verify phone numbers in Twilio console or upgrade account.');
+            }
 
             return false;
         }
@@ -70,13 +79,36 @@ class SmsService
             return $phone;
         }
 
+        // Remove all non-digit characters except +
         $clean = preg_replace('/[^\d+]/', '', $phone);
 
+        // If already has +, validate it's in correct E.164 format
         if (str_starts_with($clean, '+')) {
             return '+' . ltrim($clean, '+');
         }
 
-        return '+' . ltrim($clean, '0');
+        // Convert Zimbabwe numbers: local format 07xxxxxx -> +2637xxxxxx
+        // Also handle 0xx numbers for landlines
+        if (str_starts_with($clean, '0')) {
+            $withoutZero = ltrim($clean, '0');
+            // Check if it starts with 7 (mobile) or other (landline)
+            if (str_starts_with($withoutZero, '7') || str_starts_with($withoutZero, '8') || str_starts_with($withoutZero, '9')) {
+                // Mobile number: 0XXXXXXXX -> +263XXXXXXXX
+                return '+263' . $withoutZero;
+            } else {
+                // Landline: keep 0 prefix after country code (0XX -> +2630XX)
+                return '+263' . $clean;
+            }
+        }
+
+        // If it doesn't start with 0 or +, assume it's missing country code
+        // Most likely a mobile number starting with 7, 8, 9
+        if (str_starts_with($clean, '7') || str_starts_with($clean, '8') || str_starts_with($clean, '9')) {
+            return '+263' . $clean;
+        }
+
+        // Fallback: just add +
+        return '+' . $clean;
     }
 
     protected function getCurlOptions(): array

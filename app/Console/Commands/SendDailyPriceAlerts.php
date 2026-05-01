@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Subscription;
+use App\Models\SystemSetting;
 use App\Services\SmsService;
 use App\Services\PricingCalculatorService;
 
@@ -14,58 +15,87 @@ class SendDailyPriceAlerts extends Command
 
     public function handle(SmsService $smsService, PricingCalculatorService $pricingService)
     {
-        // Retrieve all active daily subscriptions with their associated user and product
+        $this->info('🚀 Starting daily SMS alerts...');
+        
         $subscriptions = Subscription::with(['user', 'product'])
             ->where('frequency', 'daily_summary')
             ->get();
 
-        $count = 0;
+        $total = $subscriptions->count();
+        $sent = 0;
+        $skipped = 0;
+        $failed = 0;
 
-        foreach ($subscriptions as $sub) {
+        $this->info("📋 Found {$total} active alert subscriptions\n");
+
+        foreach ($subscriptions as $index => $sub) {
             $phone = $sub->user->phone_number ?: $sub->user->phone;
+            $userName = $sub->user->name;
+            $productName = $sub->product->name;
 
-            // Skip if user has no phone number
             if (empty($phone)) {
+                $this->warn("[$index] SKIP {$userName}: no phone number");
+                $skipped++;
                 continue;
             }
 
-            // 1. Get the current MRP
+            // Get pricing data
             $mrpData = $pricingService->calculateMRP($sub->product_id);
             $mrp = $mrpData['mrp'];
             $provisional = $mrpData['is_provisional'] ? ' (provisional)' : '';
-
-            // 2. Calculate the farmer's MAP based on their saved subscription settings
             $map = $pricingService->calculateMAP($sub->cop, $sub->profit_margin);
 
-            // 3. Determine the market status and recommendation
+            // Determine status
             if ($mrp > $map) {
-                $status = 'Favourable: Market price is above your MAP.';
-                $recommendation = 'Consider selling while the market is strong.';
+                $status = 'Favourable';
+                $recommendation = 'Consider selling while market is strong.';
             } elseif ($mrp < $map) {
-                $status = 'Unfavourable: Market price is below your MAP.';
+                $status = 'Unfavourable';
                 $recommendation = 'Hold off selling until prices improve.';
             } else {
-                $status = 'Neutral: Market price equals your MAP.';
-                $recommendation = 'Monitor prices closely for the next update.';
+                $status = 'Neutral';
+                $recommendation = 'Monitor prices closely.';
             }
 
-            // 4. Construct the SMS message
             $message = sprintf(
-                "FPAS Price Alert for %s:\nMarket price%s: $%s\nYour MAP: $%s\nStatus: %s\n%s",
-                $sub->product->name,
+                "FPAS Price Alert for %s:\nMarket price%s: $%.2f\nYour MAP: $%.2f\nStatus: %s\n%s",
+                $productName,
                 $provisional,
-                number_format($mrp, 2),
-                number_format($map, 2),
+                $mrp,
+                $map,
                 $status,
                 $recommendation
             );
 
-            // 5. Send the SMS and count only successful deliveries
+            $this->line("[$index] → {$userName} ({$phone})");
+            
             if ($smsService->sendSms($phone, $message)) {
-                $count++;
+                $this->info("    ✓ Sent");
+                $sent++;
+            } else {
+                $this->error("    ✗ Failed (see logs)");
+                $failed++;
             }
         }
 
-        $this->info("Successfully sent {$count} daily price alerts.");
+        // Record that alerts were sent
+        SystemSetting::updateOrCreate(['key' => 'last_alert_sent_at'], [
+            'value' => now()->setTimezone('Africa/Johannesburg')->toDateTimeString()
+        ]);
+
+        $this->info('\n' . str_repeat('=', 50));
+        $this->info("📊 Summary: {$sent} sent, {$failed} failed, {$skipped} skipped (Total: {$total})");
+        $this->info(str_repeat('=', 50));
+
+        if ($failed > 0) {
+            $this->error('\n⚠️  Some SMS failed. Common causes:');
+            $this->error('   • Twilio trial account – verify numbers or upgrade');
+            $this->error('   • Invalid phone format (should be +263XXXXXXXXXX)');
+            $this->error('   • Daily message limit reached');
+            $this->error('   • Check logs: storage/logs/laravel.log');
+        }
+
+        $this->info('');
+        return 0;
     }
 }

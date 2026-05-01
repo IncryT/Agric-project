@@ -22,4 +22,4 @@ return new class extends Migration
             $table->dropColumn(['route_name', 'destination', 'destination_lat', 'destination_lng', 'distance_to_destination']);
         });
     }
-}
+};

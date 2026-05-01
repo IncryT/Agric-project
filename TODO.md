@@ -1,22 +1,31 @@
-# Project TODO - Fixing 23 Problems
+# Redesign Login Page - Modern Design with Landing Colors
 
-## Completed: AI Chat Fix
-- [x] Step 1: Fix DB query compatibility in ChatController.php
-- [x] Step 2: Improve fallbackReply() with static data
-- [x] Step 3: Add debugging logs
-- [x] Step 4: Test POST /chat endpoint
-- [x] Step 5: Check logs and confirm fix
+## Current Status
+- [x] Analyzed files (login.blade.php, landing.blade.php)
+- [x] Created detailed plan and got approval
+- [x] Created this TODO.md
 
-**FIX COMPLETE**: AI Chat now always responds.
+## Plan Steps
+- [x] Step 1: Review guest layout structure
+- [x] Step 2: Redesign login.blade.php 
+  - Split hero layout (left: welcome/illustration, right: glass form)
+  - Apply landing glassmorphism, emerald-cyan gradients
+  - Agri-themed illustrations
+  - Preserve form functionality
+- [x] Step 3: Test with browser preview
+- [x] Step 4: Fix Landing Page Links (Verified)
+  - [x] Point "Sign In" to `route('login')`
+  - [x] Point "Get Started" to `route('register')`
+- [x] Step 5: Complete and demo
+- [x] Step 6: Fix Admin Access (Verified)
+  - [x] Add "Admin Portal" link to footer
+  - [x] Link points to `admin.login` route
+- [x] Step 7: Handle Authenticated Landing Page
+  - [x] Show "Dashboard" and "Sign Out" instead of "Sign In" when logged in
 
-## Nearby Products Search Improvements (Problems 1-5/23)
-- [x] Step 1: Update ProductSearchController.php (pagination, better query, empty handling)
-- [x] Step 2: Fix routes/web.php (route organization)
-- [ ] Step 3: Create proper resources/js/Pages/Products/Nearby.vue (move/fix from app/Http/Controllers/Nearby.vue)
-- [ ] Step 4: Add local Leaflet icons
-- [ ] Step 5: Test full feature (/nearby-products)
-
-## Remaining 18 Problems
-- [ ] Scan & list via code analysis
-
-**Next:** Implement steps above.
+## Key Design Elements from Landing
+- Dark bg: bg-[#020617]
+- Glass: rgba(255,255,255,0.06) backdrop-blur border-white/0.08
+- Gradient: from-emerald-400 to-cyan-400
+- Font: Plus Jakarta Sans
+- Buttons: rounded-2xl gradient shadow glow

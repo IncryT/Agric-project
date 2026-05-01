@@ -24,8 +24,9 @@ class CheckRole
 
         // 2. Check if the logged-in user's role matches the required role
         if (Auth::user()->role !== $role) {
-            // If a farmer tries to access admin pages, show a 403 Forbidden error
-            abort(403, 'Unauthorized access. You do not have the correct permissions.');
+            // Redirect to their respective dashboard instead of a 403 error
+            $redirectTo = Auth::user()->role === 'admin' ? '/admin/dashboard' : '/dashboard';
+            return redirect($redirectTo)->with('error', 'Unauthorized access. Redirected to your dashboard.');
         }
 
         // 3. If everything is good, let them pass to the requested page

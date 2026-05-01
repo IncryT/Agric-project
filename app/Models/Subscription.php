@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Subscription extends Model
 {
@@ -16,6 +15,18 @@ class Subscription extends Model
         'frequency',
         'cop',
         'profit_margin',
+        'crop_variety',
+        'land_size',
+        'expected_yield_tonnes',
+        'planting_season',
+        'notes',
+    ];
+
+    protected $casts = [
+        'cop' => 'decimal:2',
+        'profit_margin' => 'decimal:2',
+        'land_size' => 'decimal:2',
+        'expected_yield_tonnes' => 'decimal:2',
     ];
 
     public function user() {

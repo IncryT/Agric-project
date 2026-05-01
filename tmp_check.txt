@@ -1,15 +1,25 @@
-<x-app-layout>
-    <x-slot name="header">
+<?php if (isset($component)) { $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54 = $attributes; } ?>
+<?php $component = App\View\Components\AppLayout::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('app-layout'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\AppLayout::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+     <?php $__env->slot('header', null, []); ?> 
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Farmer Location Map') }}
+                <?php echo e(__('Farmer Location Map')); ?>
+
             </h2>
 
-            <a href="{{ route('admin.farmers.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 transition shadow-sm">
+            <a href="<?php echo e(route('admin.farmers.index')); ?>" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 transition shadow-sm">
                 Back to Directory
             </a>
         </div>
-    </x-slot>
+     <?php $__env->endSlot(); ?>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -42,7 +52,7 @@
         </div>
     </div>
 
-    @push('scripts')
+    <?php $__env->startPush('scripts'); ?>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
@@ -70,7 +80,7 @@
             var markersLayer = L.layerGroup().addTo(map);
 
             // Get farmers data from PHP
-            var farmers = @json($farmers);
+            var farmers = <?php echo json_encode($farmers, 15, 512) ?>;
 
                      // District colors map
                     var districtColors = {};
@@ -81,7 +91,7 @@
                     ];
                     
             // Assign colors to districts from PHP data
-            var allDistricts = @json($districtData->pluck('district')->toArray());
+            var allDistricts = <?php echo json_encode($districtData->pluck('district')->toArray(), 15, 512) ?>;
             allDistricts.forEach(function(district, index) {
                 districtColors[district] = colorPalette[index % colorPalette.length];
             });
@@ -89,7 +99,7 @@
             // Generate district legend
             allDistricts.forEach(function(district, index) {
                 var color = colorPalette[index % colorPalette.length];
-                var farmerCount = @json($districtData->keyBy('district')->toArray());
+                var farmerCount = <?php echo json_encode($districtData->keyBy('district')->toArray(), 15, 512) ?>;
                 var count = farmerCount[district] ? farmerCount[district].farmer_count : 0;
                 
                 var legendItem = document.createElement('div');
@@ -162,5 +172,14 @@
             updateMap();
         });
     </script>
-    @endpush
-</x-app-layout>
+    <?php $__env->stopPush(); ?>
+ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
+<?php $attributes = $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
+<?php unset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
+<?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
+<?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
+<?php endif; ?><?php /**PATH C:\Project\resources\views\admin\farmers\map.blade.php ENDPATH**/ ?>

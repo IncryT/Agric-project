@@ -147,7 +147,17 @@ Route::middleware(['auth', 'role:farmer'])->prefix('farmer')->name('farmer.')->g
     Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('subscriptions.index');
     Route::post('/subscriptions', [SubscriptionController::class, 'store'])->name('subscriptions.store');
     Route::delete('/subscriptions/{subscription}', [SubscriptionController::class, 'destroy'])->name('subscriptions.destroy');
-    
+
+    // Agricultural Service Discovery
+    Route::get('/services', [\App\Http\Controllers\Farmer\ServiceDiscoveryController::class, 'index'])->name('services.index');
+
 });
+
+
+// Admin Login Routes (now handled by unified login page)
+// Route::middleware('guest')->prefix('admin')->name('admin.')->group(function () {
+//     Route::get('login', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'createAdmin'])->name('login');
+//     Route::post('login', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'storeAdmin'])->name('login.store');
+// });
 
 require __DIR__.'/auth.php';

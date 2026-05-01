@@ -37,15 +37,18 @@
                             </select>
                         </div>
 
-                        <div>
-                            <label for="cop" class="block text-sm font-medium text-gray-700">Cost of Production ($)</label>
-                            <input type="number" name="cop" id="cop" step="0.01" min="0" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label for="cop" class="block text-sm font-medium text-gray-700">Cost of Production ($)</label>
+                                <input type="number" name="cop" id="cop" step="0.01" min="0" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="per unit">
+                            </div>
+                            <div>
+                                <label for="profit_margin" class="block text-sm font-medium text-gray-700">Desired Margin (%)</label>
+                                <input type="number" name="profit_margin" id="profit_margin" step="0.1" min="0" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="e.g., 20">
+                            </div>
                         </div>
 
-                        <div>
-                            <label for="profit_margin" class="block text-sm font-medium text-gray-700">Desired Margin (%)</label>
-                            <input type="number" name="profit_margin" id="profit_margin" step="0.1" min="0" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                        </div>
+
 
                         <div>
                             <label for="frequency" class="block text-sm font-medium text-gray-700">Notification Frequency</label>
@@ -71,7 +74,9 @@
                                 <thead class="bg-gray-50">
                                     <tr>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Variety & Details</th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Financials</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Farm Info</th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Frequency</th>
                                         <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
                                     </tr>
@@ -82,9 +87,26 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                                 {{ $sub->product->name }}
                                             </td>
+                                            <td class="px-6 py-4 text-sm text-gray-500">
+                                                @if($sub->crop_variety)
+                                                    <div><strong>Variety:</strong> {{ $sub->crop_variety }}</div>
+                                                @endif
+                                                @if($sub->planting_season)
+                                                    <div><strong>Season:</strong> {{ $sub->planting_season }}</div>
+                                                @endif
+                                            </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 COP: ${{ number_format($sub->cop, 2) }} <br>
-                                                Margin: {{ $sub->profit_margin }}%
+                                                Margin: {{ $sub->profit_margin }}% <br>
+                                                <span class="text-xs text-gray-400">Price Floor: ${{ number_format($sub->cop / (1 - $sub->profit_margin/100), 2) }}</span>
+                                            </td>
+                                            <td class="px-6 py-4 text-sm text-gray-500">
+                                                @if($sub->land_size)
+                                                    Land: {{ $sub->land_size }} ha<br>
+                                                @endif
+                                                @if($sub->expected_yield_tonnes)
+                                                    Yield: {{ $sub->expected_yield_tonnes }} t
+                                                @endif
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {{ str_replace('_', ' ', Str::title($sub->frequency)) }}
